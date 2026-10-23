@@ -229,7 +229,7 @@ export interface Campaign {
 
 export const CAMPAIGNS: Campaign[] = [
   { id: "mithran", name: "Mithran Superstores", metric: "1M+", metricLabel: "Instagram accounts reached in 1 month", detail: "A launch-month content engine that pushed the new superstore past one million accounts reached on Instagram.", instagram: "https://www.instagram.com/mithransuperstores/" },
-  { id: "neutral-reel", name: "Neutral Solar", metric: "1.1M", metricLabel: "Reel views in 4 days", detail: "One product reel crossed 1.1 million views in four days, backed by brochures, standees and print collateral.", instagram: "https://www.instagram.com/mithransuperstores/" },
+  { id: "neutral-reel", name: "Neutral Solar", metric: "1.1M", metricLabel: "Reel views in 4 days", detail: "One product reel crossed 1.1 million views in four days, backed by brochures, standees and print collateral." },
   { id: "infosky-leads", name: "Infosky Technologies", metric: "20", metricLabel: "Leads from a ₹3,000 spend", detail: "A lean ₹3,000 ad spend returned 20 qualified leads for the technology brand.", instagram: "https://www.instagram.com/infoskytechnologies/" },
   { id: "dumont-social", name: "Dumont", metric: "Always-on", metricLabel: "Social content & coupons", detail: "Flavor-drop posters, coupon campaigns and daily social content for the dessert brand.", instagram: "https://www.instagram.com/dumont.selaiyur/" },
   { id: "rafeeq-social", name: "Rafeeq Biriyani", metric: "Brand + Web", metricLabel: "Social amplified by identity", detail: "Social content riding on a complete logo guideline, menu card and a live ordering website.", instagram: "https://www.instagram.com/rafeeq_briyani/" },
