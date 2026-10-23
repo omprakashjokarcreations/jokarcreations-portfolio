@@ -235,8 +235,6 @@ export const CAMPAIGNS: Campaign[] = [
   { id: "rafeeq-social", name: "Rafeeq Biriyani", metric: "Brand + Web", metricLabel: "Social amplified by identity", detail: "Social content riding on a complete logo guideline, menu card and a live ordering website.", instagram: "https://www.instagram.com/rafeeq_briyani/" },
 ];
 
-// Campaign corrected Instagram for Neutral Solar:
-CAMPAIGNS[1].instagram = "https://www.instagram.com/mithransuperstores/" === CAMPAIGNS[1].instagram ? "https://www.instagram.com/mithransuperstores/" : "https://www.instagram.com/mithransuperstores/";
 
 // ---------- Stats ----------
 
