@@ -25,8 +25,11 @@ export const CLIENTS: Client[] = [
   { id: "florentek", name: "Florentek", tier: "specialist", industry: "Industrial" },
 ];
 
-export const clientById = (id: string): Client =>
-  CLIENTS.find((c) => c.id === id) ?? CLIENTS[0];
+export const clientById = (id: string): Client => {
+  const client = CLIENTS.find((c) => c.id === id);
+  if (!client) throw new Error(`Unknown client: ${id}`);
+  return client;
+};
 
 const range = (base: string, from: number, to: number, pad = 2): string[] =>
   Array.from({ length: to - from + 1 }, (_, i) => `${base}-${String(from + i).padStart(pad, "0")}.jpg`);
