@@ -161,7 +161,7 @@ function ProjectModal({ project, onClose }: { project: DesignProject; onClose: (
 
         <div className="relative flex-1 overflow-hidden bg-background">
           <img
-            src={m(project.images[index])}
+            src={m(project.images[index] ?? "")}
             alt={`${client.name} — ${project.label}, view ${index + 1}`}
             className="mx-auto max-h-[62vh] w-auto max-w-full object-contain"
           />
@@ -219,7 +219,7 @@ export function WorkSection() {
   const items = useMemo(() => {
     const design = DESIGN_PROJECTS.filter((p) => clientId === "all" || p.clientId === clientId);
     const web = WEB_PROJECTS.filter((p) => clientId === "all" || p.id === clientId);
-    const marketing = CAMPAIGNS.filter((c) => clientId === "all" || c.name.toLowerCase().startsWith(clientId.split("-")[0]));
+    const marketing = CAMPAIGNS.filter((c) => clientId === "all" || c.name.toLowerCase().startsWith(clientId.split("-")[0] ?? ""));
     if (kind === "design") return design.map((p) => ({ type: "design" as const, p }));
     if (kind === "web") return web.map((p) => ({ type: "web" as const, p }));
     if (kind === "marketing") return marketing.map((c) => ({ type: "marketing" as const, p: c }));
@@ -314,7 +314,7 @@ export function WorkSection() {
                   className="group relative block w-full overflow-hidden rounded-2xl border border-border bg-card text-left transition-colors hover:border-glow/40"
                 >
                   <img
-                    src={m(p.images[0])}
+                    src={m(p.images[0] ?? "")}
                     alt={`${client.name} — ${p.label} by JOKAR Creations`}
                     loading="lazy"
                     className="w-full transition duration-500 group-hover:scale-[1.03]"

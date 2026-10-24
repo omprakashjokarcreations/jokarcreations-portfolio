@@ -42,7 +42,7 @@ export function MarketingSection() {
           subtitle="Real numbers from real campaigns — reach, views and leads."
         />
         <div className="mt-10 grid gap-4 lg:grid-cols-3">
-          {[first, second, third].map((c) => (
+          {featured.map((c) => (
             <CampaignCard key={c.id} campaign={c} large />
           ))}
         </div>
