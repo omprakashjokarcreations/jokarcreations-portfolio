@@ -1,6 +1,11 @@
 import { MEDIA } from "./media";
 
-export const m = (key: string): string => MEDIA[key] ?? "";
+export const m = (key: string): string => {
+  const parts = key.split("/");
+  // Keys may be written as client/project/file — the media index is keyed client/file.
+  const mediaKey = parts.length > 2 ? `${parts[0]}/${parts[parts.length - 1]}` : key;
+  return MEDIA[mediaKey] ?? MEDIA[key] ?? "";
+};
 
 // ---------- Clients ----------
 
