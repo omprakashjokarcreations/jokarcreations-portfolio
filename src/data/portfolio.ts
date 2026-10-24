@@ -198,7 +198,7 @@ export const DESIGN_PROJECTS: DesignProject[] = [
       "neutral-solar/print/invitation.jpg",
     ],
   },
-  { id: "neutral-solar-logo", clientId: "neutral-solar", label: "Logo Design", images: ["neutral-solar/logo/logo.jpg"] },
+  { id: "neutral-solar-logo", clientId: "neutral-solar", label: "Logo Design", images: ["neutral-solar/logo.png"] },
 
   { id: "florentek-logo", clientId: "florentek", label: "Logo Design", images: ["florentek/logo/logo.jpg"] },
 ];
