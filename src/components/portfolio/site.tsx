@@ -142,9 +142,9 @@ export function Hero() {
               <img
                 src={logo.src}
                 alt={logo.name}
-                loading="lazy"
                 className="h-14 w-[112px] object-contain"
               />
+
             </div>
           ))}
         </div>
