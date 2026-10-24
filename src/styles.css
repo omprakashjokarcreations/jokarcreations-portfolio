@@ -40,6 +40,7 @@
   --color-glow: var(--glow);
   --color-magenta: var(--magenta);
   --color-cyan: var(--cyan);
+  --color-logo-tile: var(--logo-tile);
   --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
 }
