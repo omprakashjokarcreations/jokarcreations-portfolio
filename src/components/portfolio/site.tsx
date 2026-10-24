@@ -89,20 +89,7 @@ export function Navbar() {
   );
 }
 
-const MARQUEE_CLIENTS = [
-  "Mithran Superstores",
-  "Rafeeq Biriyani",
-  "Infosky Technologies",
-  "Neutral Solar",
-  "Classiccart",
-  "Saven Boutique",
-  "Dumont",
-  "Luxaria",
-  "Shree Pharma",
-  "Flourish",
-  "Virtusa Chairs",
-  "Florentek",
-];
+import { CLIENT_LOGOS } from "@/data/client-logos";
 
 export function Hero() {
   return (
