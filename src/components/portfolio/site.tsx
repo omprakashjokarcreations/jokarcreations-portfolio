@@ -3,7 +3,9 @@ import { Menu, X, ArrowDown } from "lucide-react";
 
 import gradientLogo from "@/assets/brand/jokar-logo-gradient.png.asset.json";
 import whiteLogo from "@/assets/brand/jokar-logo-white.png.asset.json";
+import { CLIENT_LOGOS } from "@/data/client-logos";
 import { STATS } from "@/data/portfolio";
+
 
 const NAV_LINKS: [string, string][] = [
   ["Work", "#work"],
@@ -89,22 +91,8 @@ export function Navbar() {
   );
 }
 
-const MARQUEE_CLIENTS = [
-  "Mithran Superstores",
-  "Rafeeq Biriyani",
-  "Infosky Technologies",
-  "Neutral Solar",
-  "Classiccart",
-  "Saven Boutique",
-  "Dumont",
-  "Luxaria",
-  "Shree Pharma",
-  "Flourish",
-  "Virtusa Chairs",
-  "Florentek",
-];
-
 export function Hero() {
+
   return (
     <section className="relative overflow-hidden pb-16 pt-32 sm:pt-40">
       {/* ambient lighting */}
@@ -143,14 +131,21 @@ export function Hero() {
         </div>
       </div>
 
-      {/* client marquee */}
-      <div className="relative mt-16 overflow-hidden border-y border-border py-4">
-        <div className="marquee-track flex w-max items-center gap-10 whitespace-nowrap">
-          {[...MARQUEE_CLIENTS, ...MARQUEE_CLIENTS].map((name, i) => (
-            <span key={i} className="flex items-center gap-10 text-sm font-medium tracking-wide text-muted-foreground">
-              {name}
-              <span className="text-gradient text-base">✦</span>
-            </span>
+      {/* client logo marquee */}
+      <div className="relative mt-16 overflow-hidden border-y border-border py-6">
+        <div className="marquee-track flex w-max items-center gap-5">
+          {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((logo, i) => (
+            <div
+              key={i}
+              className="logo-tile flex h-20 w-32 shrink-0 items-center justify-center rounded-xl opacity-75 transition-opacity duration-300 hover:opacity-100"
+            >
+              <img
+                src={logo.src}
+                alt={logo.name}
+                className="h-14 w-[112px] object-contain"
+              />
+
+            </div>
           ))}
         </div>
       </div>

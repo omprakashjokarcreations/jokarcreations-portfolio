@@ -40,6 +40,7 @@
   --color-glow: var(--glow);
   --color-magenta: var(--magenta);
   --color-cyan: var(--cyan);
+  --color-logo-tile: var(--logo-tile);
   --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
 }
@@ -68,6 +69,7 @@
   --glow: oklch(0.64 0.21 292);
   --magenta: oklch(0.66 0.24 336);
   --cyan: oklch(0.82 0.13 207);
+  --logo-tile: oklch(0.985 0.003 286);
   --chart-1: oklch(0.64 0.21 292);
   --chart-2: oklch(0.66 0.24 336);
   --chart-3: oklch(0.82 0.13 207);
@@ -118,7 +120,13 @@
 }
 
 @utility marquee-track {
-  animation: marquee 32s linear infinite;
+  animation: marquee 55s linear infinite;
+}
+
+/* Light chip that carries a client logo on the dark background. */
+@utility logo-tile {
+  background-color: var(--logo-tile);
+  box-shadow: 0 8px 28px -14px rgb(0 0 0 / 0.6);
 }
 
 @keyframes marquee {
