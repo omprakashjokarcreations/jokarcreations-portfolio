@@ -3,7 +3,9 @@ import { Menu, X, ArrowDown } from "lucide-react";
 
 import gradientLogo from "@/assets/brand/jokar-logo-gradient.png.asset.json";
 import whiteLogo from "@/assets/brand/jokar-logo-white.png.asset.json";
+import { CLIENT_LOGOS } from "@/data/client-logos";
 import { STATS } from "@/data/portfolio";
+
 
 const NAV_LINKS: [string, string][] = [
   ["Work", "#work"],
@@ -89,9 +91,8 @@ export function Navbar() {
   );
 }
 
-import { CLIENT_LOGOS } from "@/data/client-logos";
-
 export function Hero() {
+
   return (
     <section className="relative overflow-hidden pb-16 pt-32 sm:pt-40">
       {/* ambient lighting */}
