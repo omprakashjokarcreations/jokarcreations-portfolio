@@ -3,7 +3,7 @@ import { Globe, Instagram, Mail, Send } from "lucide-react";
 
 import gradientLogo from "@/assets/brand/jokar-logo-gradient.png.asset.json";
 import { CAMPAIGNS, STORIES, WEB_PROJECTS } from "@/data/portfolio";
-import { SectionHeading, WebCard } from "./work";
+import { CampaignCard, SectionHeading, WebCard } from "./work";
 
 const CONTACT_EMAIL = "admin@jokarcreations.com";
 const MAIN_SITE = "https://www.jokarcreations.com/";
@@ -28,7 +28,8 @@ export function WebsitesSection() {
 }
 
 export function MarketingSection() {
-  const [first, second, third, ...rest] = CAMPAIGNS;
+  const featured = CAMPAIGNS.slice(0, 3);
+  const rest = CAMPAIGNS.slice(3);
   return (
     <section id="marketing" className="relative scroll-mt-20 overflow-hidden py-16">
       <div aria-hidden className="pointer-events-none absolute inset-0">
@@ -41,7 +42,7 @@ export function MarketingSection() {
           subtitle="Real numbers from real campaigns — reach, views and leads."
         />
         <div className="mt-10 grid gap-4 lg:grid-cols-3">
-          {[first, second, third].map((c) => (
+          {featured.map((c) => (
             <CampaignCard key={c.id} campaign={c} large />
           ))}
         </div>
