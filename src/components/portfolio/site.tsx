@@ -130,14 +130,21 @@ export function Hero() {
         </div>
       </div>
 
-      {/* client marquee */}
-      <div className="relative mt-16 overflow-hidden border-y border-border py-4">
-        <div className="marquee-track flex w-max items-center gap-10 whitespace-nowrap">
-          {[...MARQUEE_CLIENTS, ...MARQUEE_CLIENTS].map((name, i) => (
-            <span key={i} className="flex items-center gap-10 text-sm font-medium tracking-wide text-muted-foreground">
-              {name}
-              <span className="text-gradient text-base">✦</span>
-            </span>
+      {/* client logo marquee */}
+      <div className="relative mt-16 overflow-hidden border-y border-border py-6">
+        <div className="marquee-track flex w-max items-center gap-5">
+          {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((logo, i) => (
+            <div
+              key={i}
+              className="logo-tile flex h-20 w-32 shrink-0 items-center justify-center rounded-xl opacity-75 transition-opacity duration-300 hover:opacity-100"
+            >
+              <img
+                src={logo.src}
+                alt={logo.name}
+                loading="lazy"
+                className="h-14 w-[112px] object-contain"
+              />
+            </div>
           ))}
         </div>
       </div>
