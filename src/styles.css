@@ -119,14 +119,21 @@
   color: transparent;
 }
 
-@utility marquee-track {
-  animation: marquee 55s linear infinite;
+/* Giant display type — faint gradient fill with an electric-violet stroke. */
+@utility text-outline {
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--foreground) 70%, transparent),
+    color-mix(in oklab, var(--foreground) 8%, transparent)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 1px color-mix(in oklab, var(--glow) 45%, transparent);
 }
 
-/* Light chip that carries a client logo on the dark background. */
-@utility logo-tile {
-  background-color: var(--logo-tile);
-  box-shadow: 0 8px 28px -14px rgb(0 0 0 / 0.6);
+@utility marquee-track {
+  animation: marquee 55s linear infinite;
 }
 
 @keyframes marquee {

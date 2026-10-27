@@ -4,23 +4,16 @@ import { ArrowUpRight, ChevronLeft, ChevronRight, Instagram, X } from "lucide-re
 import {
   CAMPAIGNS,
   CLIENTS,
+  DESIGN_CATEGORIES,
   DESIGN_PROJECTS,
   WEB_PROJECTS,
   clientById,
   m,
   type Campaign,
+  type DesignCategory,
   type DesignProject,
   type WebProject,
 } from "@/data/portfolio";
-
-type Kind = "all" | "design" | "web" | "marketing";
-
-const KIND_TABS: { id: Kind; label: string }[] = [
-  { id: "all", label: "All Work" },
-  { id: "design", label: "Branding & Graphic Design" },
-  { id: "web", label: "Web Development" },
-  { id: "marketing", label: "Digital Marketing" },
-];
 
 export function SectionHeading({
   eyebrow,
@@ -209,146 +202,126 @@ function ProjectModal({ project, onClose }: { project: DesignProject; onClose: (
   );
 }
 
-// ---------- Section ----------
+// ---------- Graphic design section ----------
 
 export function WorkSection() {
-  const [kind, setKind] = useState<Kind>("all");
+  const [category, setCategory] = useState<DesignCategory | "all">("all");
   const [clientId, setClientId] = useState<string>("all");
   const [active, setActive] = useState<DesignProject | null>(null);
 
-  const items = useMemo(() => {
-    const design = DESIGN_PROJECTS.filter((p) => clientId === "all" || p.clientId === clientId);
-    const web = WEB_PROJECTS.filter((p) => clientId === "all" || p.id === clientId);
-    const marketing = CAMPAIGNS.filter((c) => clientId === "all" || c.name.toLowerCase().startsWith(clientId.split("-")[0] ?? ""));
-    if (kind === "design") return design.map((p) => ({ type: "design" as const, p }));
-    if (kind === "web") return web.map((p) => ({ type: "web" as const, p }));
-    if (kind === "marketing") return marketing.map((c) => ({ type: "marketing" as const, p: c }));
-    return [
-      ...design.map((p) => ({ type: "design" as const, p })),
-      ...web.map((p) => ({ type: "web" as const, p })),
-      ...marketing.map((c) => ({ type: "marketing" as const, p: c })),
-    ];
-  }, [kind, clientId]);
+  const items = useMemo(
+    () =>
+      DESIGN_PROJECTS.filter(
+        (p) => (category === "all" || p.category === category) && (clientId === "all" || p.clientId === clientId),
+      ),
+    [category, clientId],
+  );
 
   const chipClients = useMemo(() => {
-    const ids =
-      kind === "design"
-        ? DESIGN_PROJECTS.map((p) => p.clientId)
-        : kind === "web"
-          ? []
-          : kind === "marketing"
-            ? []
-            : [...DESIGN_PROJECTS.map((p) => p.clientId), ...WEB_PROJECTS.map((w) => w.id)];
+    const pool = DESIGN_PROJECTS.filter((p) => category === "all" || p.category === category);
+    const ids = [...new Set(pool.map((p) => p.clientId))];
     return CLIENTS.filter((c) => ids.includes(c.id));
-  }, [kind]);
-
-  const showChips = kind !== "web" && kind !== "marketing";
+  }, [category]);
 
   return (
-    <section id="work" className="mx-auto max-w-7xl scroll-mt-20 px-4 py-16 sm:px-6">
+    <section id="design" className="mx-auto max-w-7xl scroll-mt-20 px-4 pb-8 pt-4 sm:px-6">
       <SectionHeading
         eyebrow="Selected Work"
         title="One studio, every angle"
-        subtitle="Filter by service, or pick a client to see everything we delivered for them."
+        subtitle="Filter by deliverable, or pick a client to see everything we crafted for them."
       />
 
-      {/* service tabs */}
-      <div className="mt-10 flex flex-wrap justify-center gap-2">
-        {KIND_TABS.map((t) => (
+      {/* deliverable chips */}
+      <div className="mt-8 flex flex-wrap justify-center gap-2">
+        <button
+          onClick={() => {
+            setCategory("all");
+            setClientId("all");
+          }}
+          className={`rounded-full px-4 py-2 text-xs font-semibold transition-colors sm:text-sm ${
+            category === "all"
+              ? "bg-primary text-primary-foreground"
+              : "border border-border text-muted-foreground hover:bg-accent hover:text-foreground"
+          }`}
+        >
+          All Work
+        </button>
+        {DESIGN_CATEGORIES.map((c) => (
           <button
-            key={t.id}
+            key={c.id}
             onClick={() => {
-              setKind(t.id);
+              setCategory(c.id);
               setClientId("all");
             }}
-            className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-colors ${
-              kind === t.id
+            className={`rounded-full px-4 py-2 text-xs font-semibold transition-colors sm:text-sm ${
+              category === c.id
                 ? "bg-primary text-primary-foreground"
                 : "border border-border text-muted-foreground hover:bg-accent hover:text-foreground"
             }`}
           >
-            {t.label}
+            {c.label}
           </button>
         ))}
       </div>
 
       {/* client chips */}
-      {showChips && (
-        <div className="mt-4 flex flex-wrap justify-center gap-2">
+      <div className="mt-4 flex flex-wrap justify-center gap-2">
+        <button
+          onClick={() => setClientId("all")}
+          className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-colors ${
+            clientId === "all"
+              ? "bg-secondary text-secondary-foreground"
+              : "border border-border text-muted-foreground hover:bg-accent"
+          }`}
+        >
+          All Clients
+        </button>
+        {chipClients.map((c) => (
           <button
-            onClick={() => setClientId("all")}
+            key={c.id}
+            onClick={() => setClientId(clientId === c.id ? "all" : c.id)}
             className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-colors ${
-              clientId === "all"
+              clientId === c.id
                 ? "bg-secondary text-secondary-foreground"
                 : "border border-border text-muted-foreground hover:bg-accent"
             }`}
           >
-            All Clients
+            {c.name}
           </button>
-          {chipClients.map((c) => (
-            <button
-              key={c.id}
-              onClick={() => setClientId(clientId === c.id ? "all" : c.id)}
-              className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-colors ${
-                clientId === c.id
-                  ? "bg-secondary text-secondary-foreground"
-                  : "border border-border text-muted-foreground hover:bg-accent"
-              }`}
-            >
-              {c.name}
-            </button>
-          ))}
-        </div>
-      )}
+        ))}
+      </div>
 
       {/* grid */}
       <div className="mt-10 columns-1 gap-4 sm:columns-2 xl:columns-3 [&>*]:mb-4">
-        {items.map((item) => {
-          if (item.type === "design") {
-            const p = item.p;
-            const client = clientById(p.clientId);
-            return (
-              <div key={p.id} className="break-inside-avoid">
-                <button
-                  onClick={() => setActive(p)}
-                  className="group relative block w-full overflow-hidden rounded-2xl border border-border bg-card text-left transition-colors hover:border-glow/40"
-                >
-                  <img
-                    src={m(p.images[0] ?? "")}
-                    alt={`${client.name} — ${p.label} by JOKAR Creations`}
-                    loading="lazy"
-                    className="w-full transition duration-500 group-hover:scale-[1.03]"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/10 to-transparent opacity-80 transition-opacity group-hover:opacity-95" />
-                  <div className="absolute inset-x-0 bottom-0 p-4">
-                    <span
-                      className={`mb-2 inline-block rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
-                        client.tier === "full-service"
-                          ? "bg-glow/20 text-glow"
-                          : "bg-cyan/15 text-cyan"
-                      }`}
-                    >
-                      {client.tier === "full-service" ? "Full-Service" : "Specialist"}
-                    </span>
-                    <div className="font-semibold">{client.name}</div>
-                    <div className="text-sm text-muted-foreground">
-                      {p.label} · {p.images.length} {p.images.length === 1 ? "piece" : "pieces"}
-                    </div>
-                  </div>
-                </button>
-              </div>
-            );
-          }
-          if (item.type === "web") {
-            return (
-              <div key={item.p.id} className="break-inside-avoid">
-                <WebCard project={item.p} />
-              </div>
-            );
-          }
+        {items.map((p) => {
+          const client = clientById(p.clientId);
           return (
-            <div key={item.p.id} className="break-inside-avoid">
-              <CampaignCard campaign={item.p} />
+            <div key={p.id} className="break-inside-avoid">
+              <button
+                onClick={() => setActive(p)}
+                className="group relative block w-full overflow-hidden rounded-2xl border border-border bg-card text-left transition-colors hover:border-glow/40"
+              >
+                <img
+                  src={m(p.images[0] ?? "")}
+                  alt={`${client.name} — ${p.label} by JOKAR Creations`}
+                  loading="lazy"
+                  className="w-full transition duration-500 group-hover:scale-[1.03]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/10 to-transparent opacity-80 transition-opacity group-hover:opacity-95" />
+                <div className="absolute inset-x-0 bottom-0 p-4">
+                  <span
+                    className={`mb-2 inline-block rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
+                      client.tier === "full-service" ? "bg-glow/20 text-glow" : "bg-cyan/15 text-cyan"
+                    }`}
+                  >
+                    {client.tier === "full-service" ? "Full-Service" : "Specialist"}
+                  </span>
+                  <div className="font-semibold">{client.name}</div>
+                  <div className="text-sm text-muted-foreground">
+                    {p.label} · {p.images.length} {p.images.length === 1 ? "piece" : "pieces"}
+                  </div>
+                </div>
+              </button>
             </div>
           );
         })}
@@ -362,3 +335,5 @@ export function WorkSection() {
     </section>
   );
 }
+
+export { CAMPAIGNS, WEB_PROJECTS };

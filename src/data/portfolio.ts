@@ -41,42 +41,66 @@ const range = (base: string, from: number, to: number, pad = 2): string[] =>
 
 // ---------- Graphic design projects ----------
 
+export type DesignCategory =
+  | "logo"
+  | "posters"
+  | "thumbnails"
+  | "brochures"
+  | "menus"
+  | "packaging"
+  | "stationery"
+  | "signage";
+
 export interface DesignProject {
   id: string;
   clientId: string;
   label: string;
+  category: DesignCategory;
   images: string[];
 }
 
-export const DESIGN_PROJECTS: DesignProject[] = [
-  { id: "classiccart-logo", clientId: "classiccart", label: "Logo Design", images: ["classiccart/logo/logo.jpg"] },
-  { id: "classiccart-letterhead", clientId: "classiccart", label: "Letterhead", images: ["classiccart/letterhead/letterhead.jpg"] },
-  { id: "classiccart-id-card", clientId: "classiccart", label: "ID Card", images: ["classiccart/id-card/id-card.jpg"] },
+export const DESIGN_CATEGORIES: { id: DesignCategory; label: string }[] = [
+  { id: "logo", label: "Logo & Identity" },
+  { id: "posters", label: "Posters" },
+  { id: "thumbnails", label: "Thumbnails & Carousels" },
+  { id: "brochures", label: "Brochures & Pamphlets" },
+  { id: "menus", label: "Menus & Coupons" },
+  { id: "packaging", label: "Packaging" },
+  { id: "stationery", label: "Visiting Cards & Stationery" },
+  { id: "signage", label: "Signage & Boards" },
+];
 
-  { id: "infosky-logo", clientId: "infosky", label: "Logo Design", images: ["infosky/logo/logo.jpg"] },
-  { id: "infosky-letterpad", clientId: "infosky", label: "Letterpad", images: ["infosky/letterpad/letterpad.jpg"] },
+export const DESIGN_PROJECTS: DesignProject[] = [
+  { id: "classiccart-logo", clientId: "classiccart", label: "Logo Design", category: "logo", images: ["classiccart/logo/logo.jpg"] },
+  { id: "classiccart-letterhead", clientId: "classiccart", label: "Letterhead", category: "stationery", images: ["classiccart/letterhead/letterhead.jpg"] },
+  { id: "classiccart-id-card", clientId: "classiccart", label: "ID Card", category: "stationery", images: ["classiccart/id-card/id-card.jpg"] },
+
+  { id: "infosky-logo", clientId: "infosky", label: "Logo Design", category: "logo", images: ["infosky/logo/logo.jpg"] },
+  { id: "infosky-letterpad", clientId: "infosky", label: "Letterpad", category: "stationery", images: ["infosky/letterpad/letterpad.jpg"] },
   {
     id: "infosky-posters",
     clientId: "infosky",
     label: "Poster Series",
+    category: "posters",
     images: [...range("infosky/poster", 1, 17), "infosky/poster/poster-23.jpg", ...range("infosky/poster", 18, 22)],
   },
 
-  { id: "luxaria-logo", clientId: "luxaria", label: "Logo Design", images: ["luxaria/logo/logo.jpg"] },
-  { id: "luxaria-banner", clientId: "luxaria", label: "Banner", images: ["luxaria/banner/banner.jpg"] },
-  { id: "luxaria-visiting-card", clientId: "luxaria", label: "Visiting Cards", images: ["luxaria/visiting-card/visiting-card-1.jpg", "luxaria/visiting-card/visiting-card-2.jpg"] },
+  { id: "luxaria-logo", clientId: "luxaria", label: "Logo Design", category: "logo", images: ["luxaria/logo/logo.jpg"] },
+  { id: "luxaria-banner", clientId: "luxaria", label: "Banner", category: "signage", images: ["luxaria/banner/banner.jpg"] },
+  { id: "luxaria-visiting-card", clientId: "luxaria", label: "Visiting Cards", category: "stationery", images: ["luxaria/visiting-card/visiting-card-1.jpg", "luxaria/visiting-card/visiting-card-2.jpg"] },
 
-  { id: "rafeeq-menu-card", clientId: "rafeeq", label: "Menu Card", images: ["rafeeq/menu-card/menu-card.jpg"] },
-  { id: "rafeeq-logo-guidelines", clientId: "rafeeq", label: "Logo Guidelines", images: range("rafeeq/logo-guideline/guideline", 0, 12) },
-  { id: "rafeeq-brand-identity", clientId: "rafeeq", label: "Brand Identity", images: ["rafeeq/brand-identity/brand-identity-rgb.jpg", "rafeeq/brand-identity/brand-identity-banner.jpg"] },
-  { id: "rafeeq-thumbnails", clientId: "rafeeq", label: "YouTube Thumbnails", images: ["rafeeq/thumbnail/thumbnail-1.jpg", "rafeeq/thumbnail/thumbnail-2.jpg", "rafeeq/thumbnail/thumbnail-3.jpg"] },
+  { id: "rafeeq-menu-card", clientId: "rafeeq", label: "Menu Card", category: "menus", images: ["rafeeq/menu-card/menu-card.jpg"] },
+  { id: "rafeeq-logo-guidelines", clientId: "rafeeq", label: "Logo Guidelines", category: "logo", images: range("rafeeq/logo-guideline/guideline", 0, 12) },
+  { id: "rafeeq-brand-identity", clientId: "rafeeq", label: "Brand Identity", category: "logo", images: ["rafeeq/brand-identity/brand-identity-rgb.jpg", "rafeeq/brand-identity/brand-identity-banner.jpg"] },
+  { id: "rafeeq-thumbnails", clientId: "rafeeq", label: "YouTube Thumbnails", category: "thumbnails", images: ["rafeeq/thumbnail/thumbnail-1.jpg", "rafeeq/thumbnail/thumbnail-2.jpg", "rafeeq/thumbnail/thumbnail-3.jpg"] },
 
-  { id: "saven-wall-poster", clientId: "saven", label: "Wall Poster", images: ["saven/wall-poster/wall-poster.jpg"] },
-  { id: "saven-visiting-card", clientId: "saven", label: "Visiting Cards", images: ["saven/visiting-card/visiting-card-1.jpg", "saven/visiting-card/visiting-card-2.jpg"] },
+  { id: "saven-wall-poster", clientId: "saven", label: "Wall Poster", category: "posters", images: ["saven/wall-poster/wall-poster.jpg"] },
+  { id: "saven-visiting-card", clientId: "saven", label: "Visiting Cards", category: "stationery", images: ["saven/visiting-card/visiting-card-1.jpg", "saven/visiting-card/visiting-card-2.jpg"] },
   {
     id: "saven-pamphlets",
     clientId: "saven",
     label: "Pamphlets",
+    category: "brochures",
     images: [
       "saven/pamphlet/pamphlet-front.jpg",
       "saven/pamphlet/pamphlet-back.jpg",
@@ -88,6 +112,7 @@ export const DESIGN_PROJECTS: DesignProject[] = [
     id: "saven-signage",
     clientId: "saven",
     label: "Signage & Boards",
+    category: "signage",
     images: [
       "saven/signage/no-parking-board.jpg",
       "saven/signage/signage-4x4.jpg",
@@ -95,35 +120,38 @@ export const DESIGN_PROJECTS: DesignProject[] = [
       "saven/signage/invitation-poster.jpg",
     ],
   },
-  { id: "saven-logo", clientId: "saven", label: "Logo Design", images: ["saven/logo/logo.jpg"] },
+  { id: "saven-logo", clientId: "saven", label: "Logo Design", category: "logo", images: ["saven/logo/logo.jpg"] },
 
   {
     id: "shree-pharma-package",
     clientId: "shree-pharma",
     label: "Package Design",
+    category: "packaging",
     images: [
       "shree-pharma/package-design/package-front.jpg",
       "shree-pharma/package-design/package-back.jpg",
       "shree-pharma/package-design/package-3.jpg",
     ],
   },
-  { id: "shree-pharma-logo", clientId: "shree-pharma", label: "Logo Design", images: ["shree-pharma/logo/logo.jpg"] },
+  { id: "shree-pharma-logo", clientId: "shree-pharma", label: "Logo Design", category: "logo", images: ["shree-pharma/logo/logo.jpg"] },
 
   {
     id: "flourish-cards",
     clientId: "flourish",
     label: "Card Designs",
+    category: "menus",
     images: ["flourish/cards/card-1.jpg", "flourish/cards/card-2.jpg", "flourish/cards/card-3.jpg", "flourish/cards/card-4.jpg"],
   },
-  { id: "flourish-menu", clientId: "flourish", label: "Menu Design", images: range("flourish/menu/menu", 0, 9, 1) },
-  { id: "flourish-visiting-card", clientId: "flourish", label: "Visiting Cards", images: ["flourish/visiting-card/visiting-card-1.jpg", "flourish/visiting-card/visiting-card-2.jpg"] },
-  { id: "flourish-sticker", clientId: "flourish", label: "Sticker Design", images: ["flourish/sticker/sticker.jpg"] },
-  { id: "flourish-logo", clientId: "flourish", label: "Logo Design", images: ["flourish/logo/logo.jpg"] },
+  { id: "flourish-menu", clientId: "flourish", label: "Menu Design", category: "menus", images: range("flourish/menu/menu", 0, 9, 1) },
+  { id: "flourish-visiting-card", clientId: "flourish", label: "Visiting Cards", category: "stationery", images: ["flourish/visiting-card/visiting-card-1.jpg", "flourish/visiting-card/visiting-card-2.jpg"] },
+  { id: "flourish-sticker", clientId: "flourish", label: "Sticker Design", category: "stationery", images: ["flourish/sticker/sticker.jpg"] },
+  { id: "flourish-logo", clientId: "flourish", label: "Logo Design", category: "logo", images: ["flourish/logo/logo.jpg"] },
 
   {
     id: "dumont-coupons",
     clientId: "dumont",
     label: "Coupons",
+    category: "menus",
     images: [
       "dumont/coupons/coupon-red.jpg",
       "dumont/coupons/coupon-yellow.jpg",
@@ -136,12 +164,14 @@ export const DESIGN_PROJECTS: DesignProject[] = [
     id: "dumont-menu",
     clientId: "dumont",
     label: "Menu Card",
+    category: "menus",
     images: ["dumont/menu/menu-1.jpg", "dumont/menu/menu-2.jpg", "dumont/menu/menu-3.jpg", "dumont/menu/menu-4.jpg", "dumont/menu/menu-5.jpg", "dumont/menu/menu-6.jpg", "dumont/menu/menu-7.jpg", "dumont/menu/menu-8.jpg"],
   },
   {
     id: "dumont-posters",
     clientId: "dumont",
     label: "Posters",
+    category: "posters",
     images: [
       "dumont/posters/poster-1.jpg",
       "dumont/posters/poster-2.jpg",
@@ -165,6 +195,14 @@ export const DESIGN_PROJECTS: DesignProject[] = [
       "dumont/posters/flavor-biscoff.jpg",
       "dumont/posters/flavor-begian-chocolate.jpg",
       "dumont/posters/flavor-biscoff-cake.jpg",
+    ],
+  },
+  {
+    id: "dumont-carousels",
+    clientId: "dumont",
+    label: "Social Carousels",
+    category: "thumbnails",
+    images: [
       "dumont/posters/social-1.jpg",
       "dumont/posters/social-2.jpg",
       "dumont/posters/social-3.jpg",
@@ -178,19 +216,22 @@ export const DESIGN_PROJECTS: DesignProject[] = [
     id: "neutral-solar-brochures",
     clientId: "neutral-solar",
     label: "Brochures",
+    category: "brochures",
     images: ["neutral-solar/brochure/brochure-4page-1.jpg", "neutral-solar/brochure/brochure-4page-2.jpg", ...range("neutral-solar/brochure", 1, 20)],
   },
   {
     id: "neutral-solar-visiting-card",
     clientId: "neutral-solar",
     label: "Visiting Cards",
+    category: "stationery",
     images: ["neutral-solar/visiting-card/visiting-card-front.jpg", "neutral-solar/visiting-card/visiting-card-back.jpg"],
   },
-  { id: "neutral-solar-standee", clientId: "neutral-solar", label: "4x8 Standee", images: ["neutral-solar/standee/standee-4x8.jpg"] },
+  { id: "neutral-solar-standee", clientId: "neutral-solar", label: "4x8 Standee", category: "signage", images: ["neutral-solar/standee/standee-4x8.jpg"] },
   {
     id: "neutral-solar-print",
     clientId: "neutral-solar",
     label: "Print & Signage",
+    category: "signage",
     images: [
       "neutral-solar/print/banner.jpg",
       "neutral-solar/print/certificate.jpg",
@@ -198,9 +239,9 @@ export const DESIGN_PROJECTS: DesignProject[] = [
       "neutral-solar/print/invitation.jpg",
     ],
   },
-  { id: "neutral-solar-logo", clientId: "neutral-solar", label: "Logo Design", images: ["neutral-solar/logo.png"] },
+  { id: "neutral-solar-logo", clientId: "neutral-solar", label: "Logo Design", category: "logo", images: ["neutral-solar/logo.png"] },
 
-  { id: "florentek-logo", clientId: "florentek", label: "Logo Design", images: ["florentek/logo/logo.jpg"] },
+  { id: "florentek-logo", clientId: "florentek", label: "Logo Design", category: "logo", images: ["florentek/logo/logo.jpg"] },
 ];
 
 // ---------- Web development ----------
