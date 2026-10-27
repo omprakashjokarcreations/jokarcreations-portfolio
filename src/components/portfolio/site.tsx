@@ -8,7 +8,7 @@ import { STATS } from "@/data/portfolio";
 
 
 const NAV_LINKS: [string, string][] = [
-  ["Work", "#work"],
+  ["Work", "#design"],
   ["Websites", "#websites"],
   ["Marketing", "#marketing"],
   ["Stories", "#stories"],
@@ -92,9 +92,8 @@ export function Navbar() {
 }
 
 export function Hero() {
-
   return (
-    <section className="relative overflow-hidden pb-16 pt-32 sm:pt-40">
+    <section className="relative overflow-hidden pb-16 pt-28 sm:pt-32">
       {/* ambient lighting */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-[-260px] h-[560px] w-[880px] -translate-x-1/2 rounded-full bg-glow/25 blur-[150px]" />
@@ -102,11 +101,18 @@ export function Hero() {
         <div className="absolute -right-40 top-40 h-[380px] w-[380px] rounded-full bg-cyan/10 blur-[130px]" />
       </div>
 
-      <div className="relative mx-auto max-w-5xl px-4 text-center sm:px-6">
+      {/* giant PORTFOLIO backdrop */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-8 select-none text-center sm:top-12">
+        <span className="text-outline text-[clamp(3.5rem,14vw,12rem)] font-black uppercase leading-none tracking-tight">
+          Portfolio
+        </span>
+      </div>
+
+      <div className="relative mx-auto max-w-5xl px-4 pt-[clamp(2.5rem,10vw,8.5rem)] text-center sm:px-6">
         <img
           src={gradientLogo.url}
           alt="JOKAR Creations"
-          className="mx-auto w-[min(540px,82vw)] drop-shadow-[0_0_45px_rgba(139,92,246,0.35)]"
+          className="relative z-10 mx-auto w-[min(540px,82vw)] drop-shadow-[0_0_45px_rgba(139,92,246,0.35)]"
         />
         <h1 className="mt-8 text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl">
           Design. <span className="text-gradient">Web.</span> Growth.
@@ -117,7 +123,7 @@ export function Hero() {
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <a
-            href="#work"
+            href="#design"
             className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
           >
             Explore the Work <ArrowDown className="h-4 w-4" />
@@ -131,21 +137,19 @@ export function Hero() {
         </div>
       </div>
 
-      {/* client logo marquee */}
-      <div className="relative mt-16 overflow-hidden border-y border-border py-6">
-        <div className="marquee-track flex w-max items-center gap-5">
+      {/* client logo marquee — transparent logos floating on the dark page */}
+      <div className="relative mt-16 overflow-hidden border-y border-border py-8">
+        <div className="marquee-track flex w-max items-center gap-12">
           {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((logo, i) => (
-            <div
+            <img
               key={i}
-              className="logo-tile flex h-20 w-32 shrink-0 items-center justify-center rounded-xl opacity-75 transition-opacity duration-300 hover:opacity-100"
-            >
-              <img
-                src={logo.src}
-                alt={logo.name}
-                className="h-14 w-[112px] object-contain"
-              />
-
-            </div>
+              src={logo.src}
+              alt={logo.name}
+              loading="lazy"
+              className={`h-10 w-auto max-w-[140px] object-contain opacity-55 transition-opacity duration-300 hover:opacity-100 sm:h-12 ${
+                logo.invert ? "brightness-0 invert" : ""
+              }`}
+            />
           ))}
         </div>
       </div>
