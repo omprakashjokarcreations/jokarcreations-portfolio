@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Globe, Instagram, Mail, Send } from "lucide-react";
 
-import gradientLogo from "@/assets/brand/jokar-logo-gradient.png.asset.json";
+const gradientLogo = "/brand/jokar-logo-gradient.png";
 import { CAMPAIGNS, STORIES, WEB_PROJECTS } from "@/data/portfolio";
 import { CampaignCard, SectionHeading, WebCard } from "./work";
 
@@ -206,7 +206,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border py-12">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 text-center sm:px-6">
-        <img src={gradientLogo.url} alt="JOKAR Creations" className="w-[min(320px,70vw)]" />
+        <img src={gradientLogo} alt="JOKAR Creations" className="w-[min(320px,70vw)]" />
         <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
           <a href="#work" className="hover:text-foreground">Work</a>
           <a href="#websites" className="hover:text-foreground">Websites</a>

@@ -4,11 +4,14 @@ import { ArrowUpRight, ChevronLeft, ChevronRight, Instagram, X } from "lucide-re
 import {
   CAMPAIGNS,
   CLIENTS,
+  DELIVERABLE_CATEGORIES,
   DESIGN_PROJECTS,
   WEB_PROJECTS,
   clientById,
+  deliverableLabel,
   m,
   type Campaign,
+  type DeliverableCategory,
   type DesignProject,
   type WebProject,
 } from "@/data/portfolio";
@@ -147,7 +150,12 @@ function ProjectModal({ project, onClose }: { project: DesignProject; onClose: (
       >
         <div className="flex items-center justify-between border-b border-border px-5 py-4">
           <div>
-            <div className="font-semibold">{client.name}</div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">{client.name}</span>
+              <span className="rounded-full border border-border bg-secondary/80 px-2 py-0.5 text-[11px] text-muted-foreground">
+                {deliverableLabel(project.category)}
+              </span>
+            </div>
             <div className="text-sm text-muted-foreground">{project.label}</div>
           </div>
           <button
@@ -213,13 +221,24 @@ function ProjectModal({ project, onClose }: { project: DesignProject; onClose: (
 
 export function WorkSection() {
   const [kind, setKind] = useState<Kind>("all");
+  const [deliverable, setDeliverable] = useState<"all" | DeliverableCategory>("all");
   const [clientId, setClientId] = useState<string>("all");
   const [active, setActive] = useState<DesignProject | null>(null);
 
   const items = useMemo(() => {
-    const design = DESIGN_PROJECTS.filter((p) => clientId === "all" || p.clientId === clientId);
-    const web = WEB_PROJECTS.filter((p) => clientId === "all" || p.id === clientId);
-    const marketing = CAMPAIGNS.filter((c) => clientId === "all" || c.name.toLowerCase().startsWith(clientId.split("-")[0] ?? ""));
+    const design = DESIGN_PROJECTS.filter((p) => {
+      const matchClient = clientId === "all" || p.clientId === clientId;
+      const matchDeliverable = deliverable === "all" || p.category === deliverable;
+      return matchClient && matchDeliverable;
+    });
+
+    const web = (deliverable === "all" ? WEB_PROJECTS : []).filter(
+      (p) => clientId === "all" || p.id === clientId,
+    );
+    const marketing = (deliverable === "all" ? CAMPAIGNS : []).filter(
+      (c) => clientId === "all" || c.name.toLowerCase().startsWith(clientId.split("-")[0] ?? ""),
+    );
+
     if (kind === "design") return design.map((p) => ({ type: "design" as const, p }));
     if (kind === "web") return web.map((p) => ({ type: "web" as const, p }));
     if (kind === "marketing") return marketing.map((c) => ({ type: "marketing" as const, p: c }));
@@ -228,28 +247,44 @@ export function WorkSection() {
       ...web.map((p) => ({ type: "web" as const, p })),
       ...marketing.map((c) => ({ type: "marketing" as const, p: c })),
     ];
-  }, [kind, clientId]);
+  }, [kind, clientId, deliverable]);
 
   const chipClients = useMemo(() => {
-    const ids =
-      kind === "design"
-        ? DESIGN_PROJECTS.map((p) => p.clientId)
-        : kind === "web"
-          ? []
-          : kind === "marketing"
-            ? []
-            : [...DESIGN_PROJECTS.map((p) => p.clientId), ...WEB_PROJECTS.map((w) => w.id)];
+    let ids: string[] = [];
+    if (kind === "design") {
+      ids = DESIGN_PROJECTS
+        .filter((p) => deliverable === "all" || p.category === deliverable)
+        .map((p) => p.clientId);
+    } else if (kind === "web") {
+      ids = [];
+    } else if (kind === "marketing") {
+      ids = [];
+    } else {
+      const designIds = DESIGN_PROJECTS
+        .filter((p) => deliverable === "all" || p.category === deliverable)
+        .map((p) => p.clientId);
+      const webIds = deliverable === "all" ? WEB_PROJECTS.map((w) => w.id) : [];
+      ids = [...designIds, ...webIds];
+    }
     return CLIENTS.filter((c) => ids.includes(c.id));
-  }, [kind]);
+  }, [kind, deliverable]);
+
+  // Keep client filter valid if current client has no items for the active deliverable filter
+  useEffect(() => {
+    if (clientId !== "all" && !chipClients.some((c) => c.id === clientId)) {
+      setClientId("all");
+    }
+  }, [chipClients, clientId]);
 
   const showChips = kind !== "web" && kind !== "marketing";
+  const showDeliverables = kind === "all" || kind === "design";
 
   return (
     <section id="work" className="mx-auto max-w-7xl scroll-mt-20 px-4 py-16 sm:px-6">
       <SectionHeading
         eyebrow="Selected Work"
         title="One studio, every angle"
-        subtitle="Filter by service, or pick a client to see everything we delivered for them."
+        subtitle="Filter by service, deliverable type, or pick a client to see everything we delivered for them."
       />
 
       {/* service tabs */}
@@ -260,10 +295,13 @@ export function WorkSection() {
             onClick={() => {
               setKind(t.id);
               setClientId("all");
+              if (t.id === "web" || t.id === "marketing") {
+                setDeliverable("all");
+              }
             }}
-            className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-colors ${
+            className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${
               kind === t.id
-                ? "bg-primary text-primary-foreground"
+                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
                 : "border border-border text-muted-foreground hover:bg-accent hover:text-foreground"
             }`}
           >
@@ -272,32 +310,96 @@ export function WorkSection() {
         ))}
       </div>
 
+      {/* deliverable filters */}
+      {showDeliverables && (
+        <div className="mt-6 flex flex-col items-center">
+          <div className="mb-2.5 flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            <span>Work type:</span>
+          </div>
+          <div className="flex max-w-4xl flex-wrap justify-center gap-1.5 sm:gap-2">
+            {DELIVERABLE_CATEGORIES.map((cat) => {
+              const isSelected = deliverable === cat.id;
+              const count =
+                cat.id === "all"
+                  ? DESIGN_PROJECTS.filter((p) => clientId === "all" || p.clientId === clientId).length
+                  : DESIGN_PROJECTS.filter(
+                      (p) => p.category === cat.id && (clientId === "all" || p.clientId === clientId),
+                    ).length;
+
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setDeliverable(cat.id)}
+                  className={`group inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium transition-all ${
+                    isSelected
+                      ? "border border-glow/60 bg-glow/20 text-foreground shadow-sm shadow-glow/30"
+                      : "border border-border/70 bg-card/60 text-muted-foreground hover:border-glow/30 hover:bg-card hover:text-foreground"
+                  }`}
+                >
+                  <span>{cat.label}</span>
+                  <span
+                    className={`rounded-full px-1.5 py-0.2 text-[10px] ${
+                      isSelected
+                        ? "bg-glow/40 font-semibold text-white"
+                        : "bg-muted text-muted-foreground group-hover:text-foreground"
+                    }`}
+                  >
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {/* client chips */}
-      {showChips && (
-        <div className="mt-4 flex flex-wrap justify-center gap-2">
-          <button
-            onClick={() => setClientId("all")}
-            className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-colors ${
-              clientId === "all"
-                ? "bg-secondary text-secondary-foreground"
-                : "border border-border text-muted-foreground hover:bg-accent"
-            }`}
-          >
-            All Clients
-          </button>
-          {chipClients.map((c) => (
+      {showChips && chipClients.length > 0 && (
+        <div className="mt-5 flex flex-col items-center">
+          <div className="mb-2.5 flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            <span>Client:</span>
+          </div>
+          <div className="flex max-w-4xl flex-wrap justify-center gap-1.5 sm:gap-2">
             <button
-              key={c.id}
-              onClick={() => setClientId(clientId === c.id ? "all" : c.id)}
-              className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-colors ${
-                clientId === c.id
-                  ? "bg-secondary text-secondary-foreground"
-                  : "border border-border text-muted-foreground hover:bg-accent"
+              onClick={() => setClientId("all")}
+              className={`rounded-full px-3.5 py-1 text-xs font-medium transition-colors ${
+                clientId === "all"
+                  ? "border border-border bg-secondary text-secondary-foreground"
+                  : "border border-border/60 text-muted-foreground hover:bg-accent/60 hover:text-foreground"
               }`}
             >
-              {c.name}
+              All Clients
             </button>
-          ))}
+            {chipClients.map((c) => (
+              <button
+                key={c.id}
+                onClick={() => setClientId(clientId === c.id ? "all" : c.id)}
+                className={`rounded-full px-3.5 py-1 text-xs font-medium transition-colors ${
+                  clientId === c.id
+                    ? "border border-border bg-secondary text-secondary-foreground"
+                    : "border border-border/60 text-muted-foreground hover:bg-accent/60 hover:text-foreground"
+                }`}
+              >
+                {c.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* active filters reset */}
+      {(deliverable !== "all" || clientId !== "all") && (
+        <div className="mt-4 flex justify-center">
+          <button
+            onClick={() => {
+              setDeliverable("all");
+              setClientId("all");
+            }}
+            className="inline-flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-glow"
+          >
+            <X className="h-3.5 w-3.5" />
+            <span>Reset filters</span>
+          </button>
         </div>
       )}
 
@@ -321,15 +423,20 @@ export function WorkSection() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/10 to-transparent opacity-80 transition-opacity group-hover:opacity-95" />
                   <div className="absolute inset-x-0 bottom-0 p-4">
-                    <span
-                      className={`mb-2 inline-block rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
-                        client.tier === "full-service"
-                          ? "bg-glow/20 text-glow"
-                          : "bg-cyan/15 text-cyan"
-                      }`}
-                    >
-                      {client.tier === "full-service" ? "Full-Service" : "Specialist"}
-                    </span>
+                    <div className="mb-2 flex flex-wrap items-center gap-1.5">
+                      <span
+                        className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
+                          client.tier === "full-service"
+                            ? "bg-glow/20 text-glow"
+                            : "bg-cyan/15 text-cyan"
+                        }`}
+                      >
+                        {client.tier === "full-service" ? "Full-Service" : "Specialist"}
+                      </span>
+                      <span className="inline-block rounded-full border border-border/80 bg-background/80 px-2 py-0.5 text-[10px] font-medium text-foreground/80 backdrop-blur">
+                        {deliverableLabel(p.category)}
+                      </span>
+                    </div>
                     <div className="font-semibold">{client.name}</div>
                     <div className="text-sm text-muted-foreground">
                       {p.label} · {p.images.length} {p.images.length === 1 ? "piece" : "pieces"}

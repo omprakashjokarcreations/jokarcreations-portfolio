@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Menu, X, ArrowDown } from "lucide-react";
 
-import gradientLogo from "@/assets/brand/jokar-logo-gradient.png.asset.json";
-import whiteLogo from "@/assets/brand/jokar-logo-white.png.asset.json";
+const gradientLogo = "/brand/jokar-logo-gradient.png";
+const whiteLogo = "/brand/jokar-logo-white.png";
 import { CLIENT_LOGOS } from "@/data/client-logos";
 import { STATS } from "@/data/portfolio";
 
@@ -34,7 +34,7 @@ export function Navbar() {
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         <a href="#" className="flex items-center gap-2" aria-label="JOKAR Creations home">
-          <img src={whiteLogo.url} alt="JOKAR Creations" className="h-7 w-auto sm:h-9" />
+          <img src={whiteLogo} alt="JOKAR Creations" className="h-7 w-auto sm:h-9" />
         </a>
 
         <nav className="hidden items-center gap-7 md:flex">
@@ -104,7 +104,7 @@ export function Hero() {
 
       <div className="relative mx-auto max-w-5xl px-4 text-center sm:px-6">
         <img
-          src={gradientLogo.url}
+          src={gradientLogo}
           alt="JOKAR Creations"
           className="mx-auto w-[min(540px,82vw)] drop-shadow-[0_0_45px_rgba(139,92,246,0.35)]"
         />
@@ -137,14 +137,13 @@ export function Hero() {
           {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((logo, i) => (
             <div
               key={i}
-              className="logo-tile flex h-20 w-32 shrink-0 items-center justify-center rounded-xl opacity-75 transition-opacity duration-300 hover:opacity-100"
+              className="logo-tile flex h-20 w-36 shrink-0 items-center justify-center rounded-xl px-3 py-2 opacity-85 transition-opacity duration-300 hover:opacity-100"
             >
               <img
                 src={logo.src}
                 alt={logo.name}
-                className="h-14 w-[112px] object-contain"
+                className="max-h-14 max-w-[124px] w-auto h-auto object-contain"
               />
-
             </div>
           ))}
         </div>

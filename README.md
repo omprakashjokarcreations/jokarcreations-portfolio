@@ -41,25 +41,11 @@ Brand & Visual Direction:
 - Interactive filtering: Browse by Service (All Work, Branding & Graphic Design, Web Development, Digital Marketing) and browse/filter by Client (viewing all services delivered for that specific client).
 - Editorial layout with interactive project modals/detail views, statistics showcase, client stories, and a strong contact/project inquiry section.
 
-This project was built with [Lovable](https://lovable.dev).
-
-**Live app**: https://jokarcreations-portfolio.lovable.app
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/36f27b75-7d90-4864-9aff-e46032beb5c2).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
 ## Development
 
 Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
 npm i
 npm run dev
 ```
