@@ -12,3 +12,5 @@
 10. [x] Digital marketing achievements section with Instagram links
 11. [x] Client stories + contact/inquiry section
 12. [x] Verify: typecheck clean, build OK, Playwright end-to-end pass (filters, modal, all images load)
+13. [x] Art-direction redesign "The Ink Line": Bricolage Grotesque + Instrument Serif, ink-stroke hero with floating work collage, client marquee, scroll-scrubbed manifesto + count-up stats, services index (deep-links into Work filters), pinned horizontal websites gallery, paper "Results" section, sticky stacking stories, editorial contact form, oversized wordmark footer
+14. [x] Motion stack: GSAP + ScrollTrigger + SplitText (choreography), Motion (UI transitions), Lenis (smooth scroll) — all gated by prefers-reduced-motion

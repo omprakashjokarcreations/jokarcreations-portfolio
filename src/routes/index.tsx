@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { Hero, Navbar, StatsBand } from "@/components/portfolio/site";
+import { ClientMarquee, Hero, Navbar, StatsBand } from "@/components/portfolio/site";
+import { ServicesSection } from "@/components/portfolio/services";
 import { WorkSection } from "@/components/portfolio/work";
 import {
   ContactSection,
@@ -9,6 +10,7 @@ import {
   StoriesSection,
   WebsitesSection,
 } from "@/components/portfolio/more";
+import { SmoothScroll } from "@/components/portfolio/motion";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -34,11 +36,14 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="relative min-h-screen bg-background text-foreground">
+      <SmoothScroll />
       <Navbar />
-      <main>
+      <main id="main">
         <Hero />
+        <ClientMarquee />
         <StatsBand />
+        <ServicesSection />
         <WorkSection />
         <WebsitesSection />
         <MarketingSection />

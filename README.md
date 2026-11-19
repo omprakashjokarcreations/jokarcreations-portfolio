@@ -30,7 +30,7 @@ Web Development projects (with live hyperlinks and responsive device mockups):
 - One FPS - https://onefps.in/
 - Sensor Home Automation - https://sensorhomeautomation.in/
 - Ocean Lifespaces India Private Limited - https://olipllatest.netlify.app/
-- MY RESPONSE – Integrated Services - https://myresponsesintegrated.netlify.app/
+- MY RESPONSE – Integrated Services - https://myresponseintegratedservices.com/
 - EJ Associates - https://grand-chebakia-011c80.netlify.app/
 
 Brand & Visual Direction:

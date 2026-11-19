@@ -74,10 +74,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "theme-color", content: "#0b0a10" },
       { title: "JOKAR Creations" },
-      { name: "description", content: "Full-service creative studio — branding, web and marketing." },
+      {
+        name: "description",
+        content: "Full-service creative studio — branding, web and marketing.",
+      },
       { property: "og:title", content: "JOKAR Creations" },
-      { property: "og:description", content: "Full-service creative studio — branding, web and marketing." },
+      {
+        property: "og:description",
+        content: "Full-service creative studio — branding, web and marketing.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -86,7 +93,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap",
       },
       {
         rel: "stylesheet",
@@ -103,8 +110,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Marks JS as available before first paint so the hero entrance never flashes. */}
+        <script
+          dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
+        />
         <HeadContent />
       </head>
       <body>

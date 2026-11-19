@@ -263,7 +263,7 @@ export const WEB_PROJECTS: WebProject[] = [
   { id: "onefps", name: "One FPS", url: "https://onefps.in/", tagline: "Brand & campaign website", desktop: m("webdev/onefps-desktop.jpg"), mobile: m("webdev/onefps-mobile.jpg") },
   { id: "sensor-home", name: "Sensor Home Automation", url: "https://sensorhomeautomation.in/", tagline: "Smart home automation solutions site", desktop: m("webdev/sensor-home-desktop.jpg"), mobile: m("webdev/sensor-home-mobile.jpg") },
   { id: "ocean-lifespaces", name: "Ocean Lifespaces India Pvt. Ltd.", url: "https://olipllatest.netlify.app/", tagline: "Corporate website for interiors & infrastructure", desktop: m("webdev/ocean-lifespaces-desktop.jpg"), mobile: m("webdev/ocean-lifespaces-mobile.jpg") },
-  { id: "my-response", name: "My Response — Integrated Services", url: "https://myresponsesintegrated.netlify.app/", tagline: "Integrated services business website", desktop: m("webdev/my-response-desktop.jpg"), mobile: m("webdev/my-response-mobile.jpg") },
+  { id: "my-response", name: "My Response — Integrated Services", url: "https://myresponseintegratedservices.com/", tagline: "Integrated services business website", desktop: m("webdev/my-response-desktop.jpg"), mobile: m("webdev/my-response-mobile.jpg") },
   { id: "ej-associates", name: "EJ Associates", url: "https://grand-chebakia-011c80.netlify.app/", tagline: "Business website", desktop: m("webdev/ej-associates-desktop.jpg"), mobile: m("webdev/ej-associates-mobile.jpg") },
 ];
 
